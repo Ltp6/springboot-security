@@ -31,11 +31,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/level2/**").hasRole("VIP2")
                 .antMatchers("/level3/**").hasRole("VIP3");
         //开启自动配置的登录功能，如果没有登录，没有权限，就来到登录页面
-        http.formLogin();
+        http.formLogin().loginPage("/userlogin");
         //开启自动配置的注销功能，注销成功后返回首页
         http.logout().logoutSuccessUrl("/");
         //开启记住我功能
-        http.rememberMe();
+        //登录成功以后，将cookie发给浏览器保存，以后访问页面带上这个cookie，只要通过检查就可以免登录，点击注销会删除cookie
+        http.rememberMe().rememberMeParameter("remember");
+
     }
 
     /**
